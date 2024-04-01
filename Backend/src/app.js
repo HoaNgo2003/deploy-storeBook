@@ -9,7 +9,7 @@ import userRouter from "./routes/user";
 import cartRouter from "./routes/cart";
 import orderRouter from "./routes/order";
 import ChuyenMuc from "./routes/ChuyenMuc";
-
+const serverless = require('serverless-http');
 dotenv.config();
 
 const app = express();
@@ -20,12 +20,12 @@ app.use(cors());
 connectDB(process.env.MONGODB_URL)
 
 // middleware
-app.use("/api/categories", categoryRouter)
-app.use("/api/chuyenmuc",ChuyenMuc)
-app.use("/api/products", productRouter)
-app.use("/api/images", uploadRouter);
-app.use("/api", userRouter);
-app.use("/api/carts", cartRouter);
-app.use("/api/orders", orderRouter);
-
+app.use("/.netlify/functions/api/categories", categoryRouter)
+app.use("/.netlify/functions/api/chuyenmuc",ChuyenMuc)
+app.use("/.netlify/functions/api/products", productRouter)
+app.use("/.netlify/functions/api/images", uploadRouter);
+app.use("/.netlify/functions/api", userRouter);
+app.use("/.netlify/functions/api/carts", cartRouter);
+app.use("/.netlify/functions/api/orders", orderRouter);
+module.exports.handler = serverless(app);
 export const viteNodeApp = app;
